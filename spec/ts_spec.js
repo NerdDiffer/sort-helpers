@@ -1,29 +1,31 @@
 var ts = require('../');
 var assert = require('assert');
 
-describe('Sorting helper functions', function() {
+describe('Comparison functions', function() {
 
   describe('compare', function() {
-    context('comparing integers', function() {
-      it('returns -1 if the 1st number is < the 2nd number', function() {
-        assert.equal(ts.compare(-10, 10), -1);
+    context('comparing numbers', function() {
+      context('two integer values', function() {
+        it('returns -1 if the 1st number is < the 2nd number', function() {
+          assert.equal(ts.compare(-10, 10), -1);
+        });
+        it('returns  1 if the 1st number is > the 2nd number', function() {
+          assert.equal(ts.compare(10, -10), 1);
+        });
+        it('returns  0 if the 1st number is === the 2nd number', function() {
+          assert.equal(ts.compare(10, 10), 0);
+        });
       });
-      it('returns  1 if the 1st number is > the 2nd number', function() {
-        assert.equal(ts.compare(10, -10), 1);
-      });
-      it('returns  0 if the 1st number is == the 2nd number', function() {
-        assert.equal(ts.compare(10, 10), 0);
-      });
-    });
-    context('comparing floating point numbers', function() {
-      it('returns -1 if the 1st number is < the 2nd number', function() {
-        assert.equal(ts.compare(-1.0005, -1.00049), -1);
-      });
-      it('returns  1 if the 1st number is > the 2nd number', function() {
-        assert.equal(ts.compare(1.1000049, 1.1000048), 1);
-      });
-      it('returns  0 if the 1st number is == the 2nd number', function() {
-        assert.equal(ts.compare(1.0003, 1.0003), 0);
+      context('two floating point values', function() {
+        it('returns -1 if the 1st number is < the 2nd number', function() {
+          assert.equal(ts.compare(-1.0005, -1.00049), -1);
+        });
+        it('returns  1 if the 1st number is > the 2nd number', function() {
+          assert.equal(ts.compare(1.1000049, 1.1000048), 1);
+        });
+        it('returns  0 if the 1st number is === the 2nd number', function() {
+          assert.equal(ts.compare(1.0003, 1.0003), 0);
+        });
       });
     });
     context('comparing strings', function() {
@@ -35,7 +37,7 @@ describe('Sorting helper functions', function() {
           it('returns  1 if the 1st letter is > the 2nd letter', function() {
             assert.equal(ts.compare('z', 'y'), 1);
           });
-          it('returns  0 if the 1st letter is == the 2nd letter', function() {
+          it('returns  0 if the 1st letter is === the 2nd letter', function() {
             assert.equal(ts.compare('m', 'm'), 0);
           });
         });
@@ -55,10 +57,48 @@ describe('Sorting helper functions', function() {
           it('returns  1 if the 1st word is > the 2nd word', function() {
             assert.equal(ts.compare('apple', 'aardvark'), 1);
           });
-          it('returns  0 if the 1st word is == the 2nd word', function() {
+          it('returns  0 if the 1st word is === the 2nd word', function() {
             assert.equal(ts.compare('apple', 'apple'), 0);
           });
         });
+      });
+    });
+    context('comparing booleans', function() {
+      it('returns -1 when 1st value is < 2nd value', function() {
+        assert.equal(ts.compare(false, true), -1);
+      });
+      it('returns  1 when 1st value is > 2nd value', function() {
+        assert.equal(ts.compare(true, false), 1);
+      });
+      it('returns  0 when 1st value is === 2nd value', function() {
+        assert.equal(ts.compare(false, false), 0);
+      });
+    });
+    context('incompatible types', function() {
+      it('throws an error if any one of parameters is undefined', function() {
+        assert.throws( function() { ts.compare('4'); } );
+        assert.throws( function() { ts.compare(); } );
+        assert.throws( function() { ts.compare(undefined, 4); } );
+      });
+      it('throws an error if passed two different types of primitive values', function() {
+        assert.throws( function() { ts.compare(true, null); } );
+        assert.throws( function() { ts.compare(true, 4); } );
+        assert.throws( function() { ts.compare(true, 'true'); } );
+        assert.throws( function() { ts.compare(null, 4); } );
+        assert.throws( function() { ts.compare(null, '4'); } );
+        assert.throws( function() { ts.compare(4, '4'); } );
+      });
+      it('throws an error if passed an object', function() {
+        assert.throws( function() { ts.compare({}, {}); } );
+        assert.throws( function() { ts.compare([], []); } );
+      });
+      it('throws an error if passed a null value', function() {
+        assert.throws( function() { ts.compare(null, null); } );
+      });
+      it('throws an error if passed a function', function() {
+        var fn1 = function() {};
+        var fn2 = function() {};
+        assert.throws( function() { ts.compare(fn1, fn2); });
       });
     });
   });
@@ -87,35 +127,29 @@ describe('Sorting helper functions', function() {
     });
   });
 
-  describe('exch', function() {
-    it('mutates contents of the original array', function() {
-      var arr = ['a', 'b', 'c'];
-      ts.exch(arr, 0, 2);
-      ts.exch(arr, 1, 2);
-      assert.notDeepEqual(arr, ['a', 'b', 'c']);
-    });
-    it('swaps positions of two array elements', function() {
-      var arr = ['a', 'b', 'c'];
-      ts.exch(arr, 0, 1);
-      assert.equal(arr[0], 'b');
-      assert.equal(arr[1], 'a');
-      assert.equal(arr[2], 'c');
-    });
-  });
-
   describe('sorted', function() {
-    it('returns true if the array is sorted', function() {
+    it('returns true if the array is sorted ascendingly', function() {
       var arr = ['a', 'b', 'c'];
       assert(ts.sorted(arr));
     });
-    it('returns false if the array is not sorted', function() {
+    it('returns false if the array is not sorted ascendingly', function() {
       var arr = ['c', 'b', 'a'];
       assert.equal(ts.sorted(arr), false);
     });
     context('overriding the default sort criteria', function() {
-      it('allows you to redefine the sorting criteria at runtime', function() {
+      it('can verify the array is sorted descendingly', function() {
         var arr = ['c', 'b', 'a'];
         assert(ts.sorted(arr, { descending: true }));
+      });
+    });
+    context('duplicate array items', function() {
+      it('ignores duplicate adjacent items', function() {
+        var arr = [1,2,3,4,4];
+        assert(ts.sorted(arr));
+      });
+      it('ignores duplicate adjacent items in descending order', function() {
+        var arr = [4,3,3,2,1];
+        assert(ts.sorted(arr, {descending: true}));
       });
     });
   });

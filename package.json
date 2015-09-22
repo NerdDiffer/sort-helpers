@@ -1,7 +1,7 @@
 {
   "name": "total-sorta",
   "version": "0.0.1",
-  "description": "Abstracted helper functions for sorting, based on total order. Inspired by Sedgewick.",
+  "description": "Abstracted helper functions, based on total order. Inspired by Sedgewick.",
   "main": "index.js",
   "scripts": {
     "test": "mocha ./spec/**/*js"
