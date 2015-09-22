@@ -1,0 +1,32 @@
+{
+  "name": "total-sorta",
+  "version": "0.0.1",
+  "description": "Abstracted helper functions for sorting, based on total order. Inspired by Sedgewick.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha ./spec/**/*js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NerdDiffer/total-sorta.git"
+  },
+  "keywords": [
+    "sort",
+    "sorting",
+    "algorithm",
+    "helpers",
+    "sedgewick",
+    "spaceship",
+    "total",
+    "order"
+  ],
+  "author": "Rafael Espinoza <rafael@rafaelespinoza.com> (http://www.rafaelespinoza.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NerdDiffer/total-sorta/issues"
+  },
+  "homepage": "https://github.com/NerdDiffer/total-sorta#readme",
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  }
+}
