@@ -1,6 +1,6 @@
 {
   "name": "total-sorta",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Abstracted helper functions, based on total order. Inspired by Sedgewick.",
   "main": "index.js",
   "scripts": {
