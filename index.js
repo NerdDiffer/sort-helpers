@@ -1,6 +1,6 @@
 /**
  * Generic comparison function.
- * Works like the `<=>` operator in other languages.
+ * Works like the `<=>` (spaceship) operator in other languages.
  * @param v, 1st value
  * @param w, 2nd value
  * @return, -1 if v < w
@@ -12,11 +12,11 @@ var compare = function(v, w) {
   var wType = typeof w;
 
   if (vType == 'object' || vType == 'function' || wType == 'object' || wType == 'function') {
-    throw new Error('you cannot compare objects, functions, or null values');
+    throw new Error('You cannot compare objects, functions, or null values.');
   } else if (vType == 'undefined' || wType == 'undefined') {
-    throw new Error('you must pass in two things to compare');
+    throw new Error('You cannot compare undefined. Pass in 2 parameters.');
   } else if (vType != wType) {
-    throw new Error('the 2 parameters must be of the same type');
+    throw new Error('The 2 parameters must be of the same type.');
   }
 
   if (v < w)      { return -1; }

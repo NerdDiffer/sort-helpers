@@ -31,13 +31,13 @@ Like the `<=>` (spaceship) operator in Ruby, Perl, PHP or Groovy, it returns:
 
 #### `less(v, w)`
 
-* Returns true if & only if item `v` is **less than** `w`
+* Returns true *if & only if* item `v` is **less than** `w`
 * Returns false if the item `v` is greater than `w`
 * Returns false if the two items are equal
 
 #### `more(v, w)`
 
-* Returns true if & only if item `v` is **greater than** `w`
+* Returns true *if & only if* item `v` is **greater than** `w`
 * Returns false if the item `v` is less than `w`
 * Returns false if the two items are equal
 
@@ -46,3 +46,11 @@ Like the `<=>` (spaceship) operator in Ruby, Perl, PHP or Groovy, it returns:
 Returns true if your array, `arr`, is sorted.
 By default, it will check for ascending order. If you want descending order,
 pass in the option, `{ descending: true }`, as 2nd parameter.
+
+### For what it's worth, `!condition`
+
+This may seem obvious, but it wasn't to me at first. Flip the boolean result
+with `!` to check for 'less than or equal to' or 'greater than or equal to'.
+
+* `!more(v, w)` is true if `v <= w`
+* `!less(v, w)` is true if `v >= w`

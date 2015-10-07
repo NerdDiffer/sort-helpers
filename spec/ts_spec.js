@@ -113,6 +113,19 @@ describe('Comparison functions', function() {
     it('returns false if the 1st value is == the 2nd value', function() {
       assert.equal(ts.less(10, 10), false);
     });
+    context('!conditions, determine if 1st value is >= 2nd value', function() {
+      it('return true if 1st value is > 2nd value', function() {
+        // This could be written more concisely: `assert(!ts.less(10, 0))`,
+        // but I want to be extra explicit here.
+        assert.equal(!ts.less(10, 0), true);
+      });
+      it('return true if 1st value is == 2nd value', function() {
+        assert.equal(!ts.less(10, 10), true);
+      });
+      it('return false if 1st value is NOT >= 2nd value', function() {
+        assert.equal(!ts.less(0, 1), false);
+      });
+    });
   });
 
   describe('more', function() {
@@ -124,6 +137,17 @@ describe('Comparison functions', function() {
     });
     it('returns false if the 1st value is == the 2nd value', function() {
       assert.equal(ts.more(10, 10), false);
+    });
+    context('!conditions, determine if 1st value is <= 2nd value', function() {
+      it('return true if 1st value is < 2nd value', function() {
+        assert.equal(!ts.more(0, 10), true);
+      });
+      it('return true if 1st value is == 2nd value', function() {
+        assert.equal(!ts.more(10, 10), true);
+      });
+      it('return false if 1st value is NOT <= 2nd value', function() {
+        assert.equal(!ts.more(10, 1), false);
+      });
     });
   });
 
